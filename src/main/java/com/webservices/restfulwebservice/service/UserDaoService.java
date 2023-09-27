@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserDaoService {
@@ -24,5 +25,12 @@ public class UserDaoService {
         return users;
     }
 
-
+    public User findOne(int id) {
+        for(User user: users) {
+            if(user.getId() == id) {
+                return user;
+            }
+        }
+        return null;
+    }
 }
