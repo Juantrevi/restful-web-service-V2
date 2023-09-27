@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @Service
 public class UserDaoService {
@@ -26,11 +27,11 @@ public class UserDaoService {
     }
 
     public User findOne(int id) {
-        for(User user: users) {
-            if(user.getId() == id) {
-                return user;
-            }
-        }
-        return null;
+        Predicate<User> predicate = user -> user.getId() == id;
+
+        /*if (users.stream().noneMatch(predicate))
+            return null;*/
+
+        return users.stream().filter(predicate).findFirst().get();
     }
 }
