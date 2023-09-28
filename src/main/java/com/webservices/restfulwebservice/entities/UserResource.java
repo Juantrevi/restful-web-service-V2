@@ -2,6 +2,7 @@ package com.webservices.restfulwebservice.entities;
 
 import com.webservices.restfulwebservice.exceptions.UserNotFoundException;
 import com.webservices.restfulwebservice.service.UserDaoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,8 @@ public class UserResource {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+
         User savedUser = service.save(user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -44,5 +46,15 @@ public class UserResource {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @DeleteMapping("/users/{id}")
+    public User deleteUser(@PathVariable int id) {
+        User user = service.deleteById(id);
+        if (user == null) {
+            throw new UserNotFoundException("id:" + id + " not found, cannot delete");
+        }else {
+            return user;
+        }
     }
 }

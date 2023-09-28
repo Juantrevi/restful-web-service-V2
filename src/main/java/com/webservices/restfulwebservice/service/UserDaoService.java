@@ -40,4 +40,13 @@ public class UserDaoService {
         return user;
 
     }
+
+    public User deleteById(int id) {
+        Optional<User> user = users.stream().filter(u -> u.getId() == id).findFirst();
+        if (user.isPresent()) {
+            users.remove(user.get());
+            return user.get();
+        }
+        return null;
+    }
 }
