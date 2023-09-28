@@ -38,6 +38,14 @@ public class UserResource {
         if (user == null) {
             throw new UserNotFoundException("id:" + id + " not found");
         }else {
+            //EntityModel is a wrapper for a model class that adds links to it
+            //This is a HATEOAS implementation
+            //HATEOAS is a constraint of the REST application architecture
+            //HATEOAS stands for Hypermedia as the Engine of Application State
+            //HATEOAS is a component of the REST application architecture that
+            //distinguishes it from other network application architectures
+            //A REST client needs no prior knowledge about how to interact with
+            //any particular application or server beyond a generic understanding of hypermedia
             EntityModel<User> entityModel = EntityModel.of(user);
             WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).retrieveAllUsers());
             entityModel.add(link.withRel("all-users"));

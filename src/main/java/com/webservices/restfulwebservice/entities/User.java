@@ -1,6 +1,7 @@
 package com.webservices.restfulwebservice.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
@@ -13,9 +14,12 @@ public class User {
     private int id;
     @NotNull(message = "Name cannot be null")
     @Size(min = 2, message = "Name should have at least 2 characters")
+    @JsonProperty("user_name")
     private String name;
     @NotNull(message = "Birth date cannot be null")
     @Past(message = "Birth date cannot be in the future")
+    @Timestamp("dd-MM-yyyy")
+    @JsonProperty("birth_date")
     private LocalDate birthDate;
 
     public User(int id, String name, LocalDate birthDate) {
