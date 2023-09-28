@@ -31,12 +31,13 @@ public class UserDaoService {
         Predicate<User> predicate = user -> user.getId() == id;
         /*if (users.stream().noneMatch(predicate))
             return null;*/
-        return users.stream().filter(predicate).findFirst().get();
+        return users.stream().filter(predicate).findFirst().orElse(null);
     }
 
     public User save(User user) {
         user.setId(userCount++);
         users.add(user);
         return user;
+
     }
 }
