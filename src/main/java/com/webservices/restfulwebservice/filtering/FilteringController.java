@@ -41,4 +41,16 @@ public class FilteringController {
 
         return mappingJacksonValue;
     }
+
+    //Dynamic Filtering - field2, field3
+    @GetMapping("/filtering-list3")
+    public MappingJacksonValue filtering3(){
+        SomeBean someBean = new SomeBean("value1", "value2", "value3");
+        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(someBean);
+        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("field2", "field3");
+        FilterProvider filters = new SimpleFilterProvider().addFilter("SomeBeanFilter", filter);
+        mappingJacksonValue.setFilters(filters);
+
+        return mappingJacksonValue;
+    }
 }
