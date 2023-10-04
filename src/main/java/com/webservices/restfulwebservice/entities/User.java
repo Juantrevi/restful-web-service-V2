@@ -25,6 +25,7 @@ public class User {
     @Timestamp("dd-MM-yyyy")
     @JsonProperty("birth_date")
     private LocalDate birthDate;
+    @JsonProperty("city")
     @ManyToOne(cascade = CascadeType.ALL)
     private City city;
 

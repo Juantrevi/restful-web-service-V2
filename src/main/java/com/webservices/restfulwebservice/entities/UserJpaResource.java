@@ -35,7 +35,7 @@ public class UserJpaResource {
 
 
     @GetMapping("/jpa/users/{id}")
-    public EntityModel<Optional<User>> retrieveUser(@PathVariable int id) {
+    public EntityModel<User> retrieveUser(@PathVariable int id) {
         Optional<User> user = service.findById(id);
 
         if (user.isEmpty()) {
@@ -49,7 +49,7 @@ public class UserJpaResource {
             //distinguishes it from other network application architectures
             //A REST client needs no prior knowledge about how to interact with
             //any particular application or server beyond a generic understanding of hypermedia
-            EntityModel<Optional<User>> entityModel = EntityModel.of(user);
+            EntityModel<User> entityModel = EntityModel.of(user.get());
             WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).retrieveAllUsers());
             entityModel.add(link.withRel("all-users"));
             return entityModel;
