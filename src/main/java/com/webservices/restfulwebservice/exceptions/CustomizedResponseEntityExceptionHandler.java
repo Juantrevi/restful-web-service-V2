@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler{
 
     @ExceptionHandler(Exception.class)
-
     public final ResponseEntity<ErrorDetails> handleAllExceptions(Exception ex, WebRequest request) throws Exception {
 
         ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(),
@@ -27,10 +26,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
     }
 
-
-
     @ExceptionHandler(UserNotFoundException.class)
-
     public final ResponseEntity<ErrorDetails> handleUserNotFoundException(Exception ex, WebRequest request) throws Exception {
 
         ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(),
@@ -54,8 +50,5 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
 
     }
-
-
-
 }
 

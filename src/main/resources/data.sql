@@ -1,0 +1,9 @@
+insert into user_details(id, birth_date, name) values(10001, sysdate(), 'Ranga');
+insert into user_details(id, birth_date, name) values(10002, sysdate(), 'Ravi');
+insert into user_details(id, birth_date, name) values(10003, sysdate(), 'Satish');
+insert into user_details(id, birth_date, name) values(10004, sysdate(), 'Raghu');
+insert into user_details(id, birth_date, name) values(10005, sysdate(), 'Rahul');
+insert into user_details(id, birth_date, name) values(10006, sysdate(), 'Rajesh');
+insert into user_details(id, birth_date, name) values(10007, sysdate(), 'Ramesh');
+insert into user_details(id, birth_date, name) values(10008, sysdate(), 'Rakesh');
+insert into user_details(id, birth_date, name) values(10009, sysdate(), 'Raj');
