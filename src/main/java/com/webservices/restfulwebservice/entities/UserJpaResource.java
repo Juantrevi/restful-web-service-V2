@@ -22,8 +22,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class UserJpaResource {
 
 
-    @Autowired
-    private IUserRepository service;
+    private final IUserRepository service;
+
+    public UserJpaResource(IUserRepository service) {
+        this.service = service;
+    }
 
     @GetMapping("/jpa/users")
     public List<User> retrieveAllUsers() {
@@ -57,6 +60,7 @@ public class UserJpaResource {
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
 
         User savedUser = service.save(user);
+
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
