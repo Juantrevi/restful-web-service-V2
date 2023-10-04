@@ -2,9 +2,7 @@ package com.webservices.restfulwebservice.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
@@ -27,14 +25,17 @@ public class User {
     @Timestamp("dd-MM-yyyy")
     @JsonProperty("birth_date")
     private LocalDate birthDate;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private City city;
 
-    public User(int id, String name, LocalDate birthDate) {
+    public User() {
+    }
+
+    public User(int id, String name, LocalDate birthDate, City city) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
-    }
-
-    public User() {
+        this.city = city;
     }
 
     public int getId() {
@@ -61,12 +62,21 @@ public class User {
         this.birthDate = birthDate;
     }
 
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
+                ", city=" + city +
                 '}';
     }
 }
