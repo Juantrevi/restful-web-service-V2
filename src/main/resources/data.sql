@@ -17,15 +17,16 @@ insert into user_details(id, birth_date, name, city_id) values(10008, current_da
 insert into user_details(id, birth_date, name, city_id) values(10009, current_date(), 'Raj', 5);
 
 
-insert into post(id, description, user_id) values(1, 'I want to learn AWS', 10001);
-insert into post(id, description, user_id) values(2, 'I want to learn Azure', 10001);
-insert into post(id, description, user_id) values(3, 'I want to learn GCP', 10001);
-insert into post(id, description, user_id) values(4, 'I want to learn Java', 10002);
-insert into post(id, description, user_id) values(5, 'I want to learn Spring', 10003);
-insert into post(id, description, user_id) values(6, 'I want to learn Spring Boot', 10004);
-insert into post(id, description, user_id) values(7, 'I want to learn Spring Cloud', 10004);
-insert into post(id, description, user_id) values(8, 'I want to learn Spring Data', 10005);
-insert into post(id, description, user_id) values(9, 'I want to learn Spring Security', 10009);
+insert into post(id, description, user_id) values(1001, 'I want to learn AWS', 10001);
+insert into post(id, description, user_id) values(2001, 'I want to learn Azure', 10001);
+insert into post(id, description, user_id) values(3002, 'I want to learn GCP', 10001);
+insert into post(id, description, user_id) values(4003, 'I want to learn Java', 10002);
+insert into post(id, description, user_id) values(5004, 'I want to learn Spring', 10003);
+insert into post(id, description, user_id) values(6005, 'I want to learn Spring Boot', 10004);
+insert into post(id, description, user_id) values(7004, 'I want to learn Spring Cloud', 10004);
+insert into post(id, description, user_id) values(8004, 'I want to learn Spring Data', 10005);
+
+
 
 
 

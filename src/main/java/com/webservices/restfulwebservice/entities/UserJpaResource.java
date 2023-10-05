@@ -109,16 +109,25 @@ public class UserJpaResource {
     }
 
     @PostMapping("/jpa/users/{id}/posts")
-    public List<Post> createPostForUser(@PathVariable int id, @Valid @RequestBody Post post) {
+    public ResponseEntity<Object> createPost(@PathVariable int id, @Valid @RequestBody Post post) {
+
         Optional<User> user = service.findById(id);
 
         if (user.isEmpty()) {
             throw new UserNotFoundException("id:" + id + " not found");
         }else {
+
             post.setUser(user.get());
-            postService.save(post);
-            return user.get().getPosts();
+            Post savedPost = postService.save(post);
+
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(savedPost.getId())
+                    .toUri();
+
+            return ResponseEntity.created(location).build();
         }
     }
+
 }
 
