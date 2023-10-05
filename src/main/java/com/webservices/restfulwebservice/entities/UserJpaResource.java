@@ -19,13 +19,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RestController
 public class UserJpaResource {
 
-    @Autowired
     private IUserRepository service;
-
-    @Autowired
     private IPostRepository postService;
 
-
+    public UserJpaResource(IUserRepository service, IPostRepository postService) {
+        this.service = service;
+        this.postService = postService;
+    }
 
     @GetMapping("/jpa/users")
     public List<User> retrieveAllUsers() {
@@ -106,6 +106,19 @@ public class UserJpaResource {
     @GetMapping("/jpa/users/posts")
     public List<Post> retrieveAllPosts() {
         return postService.findAll();
+    }
+
+    @PostMapping("/jpa/users/{id}/posts")
+    public List<Post> createPostForUser(@PathVariable int id, @Valid @RequestBody Post post) {
+        Optional<User> user = service.findById(id);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("id:" + id + " not found");
+        }else {
+            post.setUser(user.get());
+            postService.save(post);
+            return user.get().getPosts();
+        }
     }
 }
 
