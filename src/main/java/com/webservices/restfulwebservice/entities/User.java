@@ -32,7 +32,7 @@ public class User {
     private City city;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
+    //@JsonIgnore
     private List<Post> posts;
 
     public User() {

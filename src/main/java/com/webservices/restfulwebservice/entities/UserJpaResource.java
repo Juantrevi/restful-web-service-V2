@@ -2,11 +2,10 @@ package com.webservices.restfulwebservice.entities;
 
 
 import com.webservices.restfulwebservice.exceptions.UserNotFoundException;
+import com.webservices.restfulwebservice.repository.IPostRepository;
 import com.webservices.restfulwebservice.repository.IUserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -16,17 +15,17 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class UserJpaResource {
 
+    @Autowired
+    private IUserRepository service;
 
-    private final IUserRepository service;
+    @Autowired
+    private IPostRepository postService;
 
-    public UserJpaResource(IUserRepository service) {
-        this.service = service;
-    }
+
 
     @GetMapping("/jpa/users")
     public List<User> retrieveAllUsers() {
@@ -34,7 +33,7 @@ public class UserJpaResource {
     }
 
 
-    @GetMapping("/jpa/users/{id}")
+/*    @GetMapping("/jpa/users/{id}")
     public EntityModel<User> retrieveUser(@PathVariable int id) {
         Optional<User> user = service.findById(id);
 
@@ -53,6 +52,18 @@ public class UserJpaResource {
             WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).retrieveAllUsers());
             entityModel.add(link.withRel("all-users"));
             return entityModel;
+        }
+    }*/
+
+    @GetMapping("/jpa/users/{id}")
+    public Optional<User> retrieveUser(@PathVariable int id) {
+        Optional<User> user = service.findById(id);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("id:" + id + " not found");
+        }else {
+
+            return user;
         }
     }
 
@@ -79,6 +90,22 @@ public class UserJpaResource {
             service.deleteById(id);
             return user;
         }
+    }
+
+    @GetMapping("/jpa/users/{id}/posts")
+    public List<Post> retrieveAllPostsOfUser(@PathVariable int id) {
+        Optional<User> user = service.findById(id);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("id:" + id + " not found");
+        }else {
+            return user.get().getPosts();
+        }
+    }
+
+    @GetMapping("/jpa/users/posts")
+    public List<Post> retrieveAllPosts() {
+        return postService.findAll();
     }
 }
 
