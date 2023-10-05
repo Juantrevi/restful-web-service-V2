@@ -18,15 +18,15 @@ public class User {
     private int id;
     @NotNull(message = "Name cannot be null")
     @Size(min = 2, message = "Name should have at least 2 characters")
-    @JsonProperty("user_name")
+    //@JsonProperty("user_name")
     private String name;
     @NotNull(message = "Birth date cannot be null")
     @Past(message = "Birth date cannot be in the future")
     @Timestamp("dd-MM-yyyy")
-    @JsonProperty("birth_date")
+    //@JsonProperty("birth_date")
     private LocalDate birthDate;
-    @JsonProperty("city")
-    @ManyToOne(cascade = CascadeType.ALL)
+    //@JsonProperty("city")
+    @ManyToOne
     private City city;
 
     public User() {
