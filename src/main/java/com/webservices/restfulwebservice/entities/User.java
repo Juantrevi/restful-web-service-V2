@@ -77,6 +77,14 @@ public class User {
         this.city = city;
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -84,6 +92,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
                 ", city=" + city +
+                ", posts=" + posts +
                 '}';
     }
 }
