@@ -19,17 +19,17 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RestController
 public class UserJpaResource {
 
-    private IUserRepository service;
-    private IPostRepository postService;
+    private final IUserRepository userService;
+    private final IPostRepository postService;
 
     public UserJpaResource(IUserRepository service, IPostRepository postService) {
-        this.service = service;
+        this.userService = service;
         this.postService = postService;
     }
 
     @GetMapping("/jpa/users")
     public List<User> retrieveAllUsers() {
-        return service.findAll();
+        return userService.findAll();
     }
 
 
@@ -57,7 +57,7 @@ public class UserJpaResource {
 
     @GetMapping("/jpa/users/{id}")
     public Optional<User> retrieveUser(@PathVariable int id) {
-        Optional<User> user = service.findById(id);
+        Optional<User> user = userService.findById(id);
 
         if (user.isEmpty()) {
             throw new UserNotFoundException("id:" + id + " not found");
@@ -70,7 +70,7 @@ public class UserJpaResource {
     @PostMapping("/jpa/users")
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
 
-        User savedUser = service.save(user);
+        User savedUser = userService.save(user);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -83,18 +83,18 @@ public class UserJpaResource {
 
     @DeleteMapping("/jpa/users/{id}")
     public Optional<User> deleteUser(@PathVariable int id) {
-        Optional<User> user = service.findById(id);
+        Optional<User> user = userService.findById(id);
         if (user.isEmpty()) {
             throw new UserNotFoundException("id:" + id + " not found, cannot delete");
         }else {
-            service.deleteById(id);
+            userService.deleteById(id);
             return user;
         }
     }
 
     @GetMapping("/jpa/users/{id}/posts")
     public List<Post> retrieveAllPostsOfUser(@PathVariable int id) {
-        Optional<User> user = service.findById(id);
+        Optional<User> user = userService.findById(id);
 
         if (user.isEmpty()) {
             throw new UserNotFoundException("id:" + id + " not found");
@@ -111,7 +111,7 @@ public class UserJpaResource {
     @PostMapping("/jpa/users/{id}/posts")
     public ResponseEntity<Object> createPost(@PathVariable int id, @Valid @RequestBody Post post) {
 
-        Optional<User> user = service.findById(id);
+        Optional<User> user = userService.findById(id);
 
         if (user.isEmpty()) {
             throw new UserNotFoundException("id:" + id + " not found");
@@ -131,7 +131,7 @@ public class UserJpaResource {
 
     @GetMapping("/jpa/users/{id}/posts/{postId}")
     public Post retrievePost(@PathVariable int id, @PathVariable int postId) {
-        Optional<User> user = service.findById(id);
+        Optional<User> user = userService.findById(id);
         Optional<Post> post = postService.findById(postId);
 
         if (user.isEmpty()) {
