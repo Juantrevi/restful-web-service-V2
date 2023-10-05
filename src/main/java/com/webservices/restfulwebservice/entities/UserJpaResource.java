@@ -129,5 +129,23 @@ public class UserJpaResource {
         }
     }
 
+    @GetMapping("/jpa/users/{id}/posts/{postId}")
+    public Post retrievePost(@PathVariable int id, @PathVariable int postId) {
+        Optional<User> user = service.findById(id);
+        Optional<Post> post = postService.findById(postId);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("id:" + id + " not found");
+        }else {
+            if (post.isEmpty()) {
+                throw new UserNotFoundException("id:" + postId + " not found");
+            }else if (post.get().getUser().getId() != id) {
+                throw new UserNotFoundException("This post does not belong to this user");
+            }else {
+                return post.get();
+            }
+        }
+    }
+
 }
 
