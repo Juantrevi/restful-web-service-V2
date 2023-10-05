@@ -1,6 +1,7 @@
 package com.webservices.restfulwebservice.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import jakarta.validation.constraints.Size;
 import jdk.jfr.Timestamp;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity(name = "user_details")
 public class User {
@@ -28,6 +30,10 @@ public class User {
     //@JsonProperty("city")
     @ManyToOne
     private City city;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Post> posts;
 
     public User() {
     }
